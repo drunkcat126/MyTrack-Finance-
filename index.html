@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyTrack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+                <h1>MyTrack</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#dashboard"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+                    <li><a href="#transaksi"><i class="fas fa-exchange-alt"></i> <span>Transaksi</span></a></li>
+                    <li><a href="#kategori"><i class="fas fa-tags"></i> <span>Kategori</span></a></li>
+                    <li><a href="#target"><i class="fas fa-bullseye"></i> <span>Target</span></a></li>
+                    <li><a href="#laporan"><i class="fas fa-chart-pie"></i> <span>Laporan</span></a></li>
+                </ul>
+            </nav>
+            <div class="theme-toggle">
+                <button id="theme-switcher" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <span>Mode Gelap</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-title">
+                    <h1>Dashboard</h1>
+                    <p>Ringkasan keuangan Anda</p>
+                </div>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=bayem&background=4a6fa5&color=fff" alt="Profil bayem" width="40" height="40">
+                    <span>Ardhi</span>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="content-area" id="dashboard-content">
+                <!-- Saldo Cards -->
+                <div class="card-row">
+                    <div class="card balance-card">
+                        <div class="card-icon" aria-hidden="true">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <div class="card-info">
+                            <h2>Total Saldo</h2>
+                            <p id="total-saldo" aria-live="polite">Rp 0</p>
+                        </div>
+                    </div>
+                    <div class="card income-card">
+                        <div class="card-icon" aria-hidden="true">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="card-info">
+                            <h2>Pemasukan</h2>
+                            <p id="total-pemasukan" aria-live="polite">Rp 0</p>
+                        </div>
+                    </div>
+                    <div class="card expense-card">
+                        <div class="card-icon" aria-hidden="true">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="card-info">
+                            <h2>Pengeluaran</h2>
+                            <p id="total-pengeluaran" aria-live="polite">Rp 0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transaksi Terakhir -->
+                <section class="recent-transactions" aria-labelledby="recent-transactions-heading">
+                    <div class="card-header">
+                        <h2 id="recent-transactions-heading">Transaksi Terakhir</h2>
+                        <a href="#transaksi" class="view-all">Lihat Semua</a>
+                    </div>
+                    <div class="transactions-list" id="recent-transactions">
+                        <!-- Transaksi akan diisi oleh JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Grafik Bulanan -->
+                <section class="monthly-chart" aria-labelledby="monthly-chart-heading">
+                    <div class="card-header">
+                        <h2 id="monthly-chart-heading">Grafik Pengeluaran & Pemasukan Bulanan</h2>
+                        <div class="chart-controls">
+                            <select id="chart-year-selector" class="chart-selector">
+                                <!-- Tahun akan diisi oleh JavaScript -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Rekomendasi -->
+                <section class="recommendations" aria-labelledby="recommendations-heading">
+                    <div class="card-header">
+                        <h2 id="recommendations-heading">Rekomendasi</h2>
+                    </div>
+                    <div class="recommendations-list" id="recommendations-container">
+                        <!-- Rekomendasi akan diisi oleh JavaScript -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- Transaksi Content -->
+            <div class="content-area hidden" id="transaksi-content">
+                <div class="transaction-header">
+                    <h1>Manajemen Transaksi</h1>
+                    <button id="add-transaction" class="btn-primary"><i class="fas fa-plus"></i> Tambah Transaksi</button>
+                </div>
+                
+                <div class="table-container">
+                    <table class="transactions-table" aria-label="Daftar transaksi">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tanggal</th>
+                                <th scope="col">Kategori</th>
+                                <th scope="col">Deskripsi</th>
+                                <th scope="col">Jumlah</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-table-body">
+                            <!-- Transaksi akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Kategori Content -->
+            <div class="content-area hidden" id="kategori-content">
+                <div class="transaction-header">
+                    <h1>Manajemen Kategori</h1>
+                    <button id="add-category" class="btn-primary"><i class="fas fa-plus"></i> Tambah Kategori</button>
+                </div>
+                
+                <div class="table-container">
+                    <table class="categories-table" aria-label="Daftar kategori">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Jenis</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categories-table-body">
+                            <!-- Kategori akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Target Content -->
+            <div class="content-area hidden" id="target-content">
+                <div class="transaction-header">
+                    <h1>Target Keuangan</h1>
+                    <button id="add-milestone" class="btn-primary"><i class="fas fa-plus"></i> Tambah Target</button>
+                </div>
+                
+                <div class="table-container">
+                    <table class="milestones-table" aria-label="Daftar target keuangan">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nama Target</th>
+                                <th scope="col">Target Jumlah</th>
+                                <th scope="col">Terkumpul</th>
+                                <th scope="col">Progress</th>
+                                <th scope="col">Target Tanggal</th>
+                                <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="milestones-table-body">
+                            <!-- Target akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Laporan Content -->
+            <div class="content-area hidden" id="laporan-content">
+                <div class="transaction-header">
+                    <h1>Laporan Keuangan</h1>
+                    <div class="report-controls">
+                        <select id="report-type" class="chart-selector">
+                            <option value="monthly">Bulanan</option>
+                            <option value="category">Berdasarkan Kategori</option>
+                        </select>
+                        <select id="report-year" class="chart-selector">
+                            <!-- Tahun akan diisi oleh JavaScript -->
+                        </select>
+                        <button id="export-pdf" class="btn-primary"><i class="fas fa-file-pdf"></i> Export PDF</button>
+                    </div>
+                </div>
+                
+                <div class="report-container">
+                    <div class="chart-container">
+                        <canvas id="reportChart"></canvas>
+                    </div>
+                    <div class="report-summary" id="report-summary">
+                        <!-- Ringkasan laporan akan diisi oleh JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Forms -->
+            <div id="modal-container">
+                <!-- Form Tambah Transaksi -->
+                <div class="modal hidden" id="transaction-modal" role="dialog" aria-modal="true" aria-labelledby="transaction-modal-title">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="transaction-modal-title">Tambah Transaksi</h2>
+                            <button class="close-modal" aria-label="Tutup modal">&times;</button>
+                        </div>
+                        <form id="transaction-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="transaction-type">Jenis Transaksi</label>
+                                    <select id="transaction-type" required aria-required="true">
+                                        <option value="">Pilih Jenis</option>
+                                        <option value="income">Pemasukan</option>
+                                        <option value="expense">Pengeluaran</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="transaction-amount">Jumlah (Rp)</label>
+                                    <input type="number" id="transaction-amount" min="0" step="1000" required aria-required="true">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="transaction-date">Tanggal</label>
+                                    <input type="date" id="transaction-date" required aria-required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="transaction-category">Kategori</label>
+                                    <select id="transaction-category" required aria-required="true">
+                                        <option value="">Pilih Kategori</option>
+                                        <!-- Kategori akan diisi oleh JavaScript -->
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="transaction-description">Deskripsi</label>
+                                <textarea id="transaction-description" rows="3"></textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary cancel-btn">Batal</button>
+                                <button type="submit" class="btn-primary">Simpan Transaksi</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Form Tambah Kategori -->
+                <div class="modal hidden" id="category-modal" role="dialog" aria-modal="true" aria-labelledby="category-modal-title">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="category-modal-title">Tambah Kategori</h2>
+                            <button class="close-modal" aria-label="Tutup modal">&times;</button>
+                        </div>
+                        <form id="category-form">
+                            <div class="form-group">
+                                <label for="category-name">Nama Kategori</label>
+                                <input type="text" id="category-name" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="category-type">Jenis Kategori</label>
+                                <select id="category-type" required aria-required="true">
+                                    <option value="">Pilih Jenis</option>
+                                    <option value="income">Pemasukan</option>
+                                    <option value="expense">Pengeluaran</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary cancel-btn">Batal</button>
+                                <button type="submit" class="btn-primary">Simpan Kategori</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Form Tambah Target -->
+                <div class="modal hidden" id="milestone-modal" role="dialog" aria-modal="true" aria-labelledby="milestone-modal-title">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="milestone-modal-title">Tambah Target</h2>
+                            <button class="close-modal" aria-label="Tutup modal">&times;</button>
+                        </div>
+                        <form id="milestone-form">
+                            <div class="form-group">
+                                <label for="milestone-name">Nama Target</label>
+                                <input type="text" id="milestone-name" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="milestone-target">Target Jumlah (Rp)</label>
+                                <input type="number" id="milestone-target" min="1000" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="milestone-date">Target Tanggal</label>
+                                <input type="date" id="milestone-date" required aria-required="true">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary cancel-btn">Batal</button>
+                                <button type="submit" class="btn-primary">Simpan Target</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
