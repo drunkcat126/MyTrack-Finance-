@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyTrack</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+                <h1>MyTrack</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#dashboard"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+                    <li><a href="#transaksi"><i class="fas fa-exchange-alt"></i> <span>Transactions</span></a></li>
+                    <li><a href="#anggaran"><i class="fas fa-money-check-alt"></i> <span>Budgeting</span></a></li>
+                    <li><a href="#kategori"><i class="fas fa-tags"></i> <span>Categories</span></a></li>
+                    <li><a href="#target"><i class="fas fa-bullseye"></i> <span>Targets</span></a></li>
+                    <li><a href="#laporan"><i class="fas fa-chart-pie"></i> <span>Reports</span></a></li>
+                </ul>
+            </nav>
+            <div class="theme-toggle">
+                <button id="theme-switcher" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="header-title">
+                    <h1>Dashboard</h1>
+                    <p>Your financial summary</p>
+                </div>
+
+                <div class="header-controls">
+                    <div class="currency-selector">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <select id="currency-switcher">
+                            <option value="IDR">IDR</option>
+                            <option value="SGD">SGD</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                    <div class="user-profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Megan</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="overlay" id="overlay"></div>
+
+            <div class="content-area" id="dashboard-content">
+                <div class="card-row">
+                    <div class="card balance-card">
+                        <div class="card-icon" aria-hidden="true">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <div class="card-info">
+                            <h2>Total Balance</h2>
+                            <p id="total-saldo" aria-live="polite">Rp 0</p>
+                        </div>
+                    </div>
+                    <div class="card income-card">
+                        <div class="card-icon" aria-hidden="true">
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="card-info">
+                            <h2>Income</h2>
+                            <p id="total-pemasukan" aria-live="polite">Rp 0</p>
+                        </div>
+                    </div>
+                    <div class="card expense-card">
+                        <div class="card-icon" aria-hidden="true">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="card-info">
+                            <h2>Expense</h2>
+                            <p id="total-pengeluaran" aria-live="polite">Rp 0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <section class="monthly-chart" aria-labelledby="monthly-chart-heading">
+                    <div class="chart-container">
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                </section>
+                
+                <section class="recent-transactions" aria-labelledby="recent-transactions-heading">
+                    <div class="card-header">
+                        <h2 id="recent-transactions-heading">Recent Transactions</h2>
+                        <a href="#transaksi" class="view-all">View All</a>
+                    </div>
+                    <div class="transactions-list" id="recent-transactions">
+                        </div>
+                </section>
+
+                <section class="recommendations" aria-labelledby="recommendations-heading">
+                    <div class="card-header">
+                        <h2 id="recommendations-heading">Recommendations</h2>
+                    </div>
+                    <div class="recommendations-list" id="recommendations-container">
+                        </div>
+                </section>
+            </div>
+
+            <div class="content-area hidden" id="transaksi-content">
+                <div class="transaction-header">
+                    <h1>Transaction Management</h1>
+                    <div>
+                        <button id="export-csv-btn" class="btn-secondary"><i class="fas fa-file-csv"></i> Export CSV</button>
+                        <button id="add-transaction" class="btn-primary"><i class="fas fa-plus"></i> Add Transaction (Ctrl+T)</button>
+                    </div>
+                </div>
+
+                <div class="transaction-filters">
+                    <div class="form-group">
+                        <label for="filter-type">Filter by Type</label>
+                        <select id="filter-type">
+                            <option value="all">All Types</option>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-start-date">Start Date</label>
+                        <input type="date" id="filter-start-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-end-date">End Date</label>
+                        <input type="date" id="filter-end-date">
+                    </div>
+                    <button id="filter-reset-btn" class="btn-secondary">Reset</button>
+                </div>
+                <div class="table-container">
+                    <table class="transactions-table" aria-label="Transactions list">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-area hidden" id="anggaran-content">
+                <div class="transaction-header">
+                    <h1>Monthly Budgeting</h1>
+                    <button id="add-budget" class="btn-primary"><i class="fas fa-plus"></i> Set Budget Limit</button>
+                </div>
+                
+                <div class="table-container">
+                    <table class="budgets-table" aria-label="Monthly Budgets list">
+                        <thead>
+                            <tr>
+                                <th scope="col">Category</th>
+                                <th scope="col">Monthly Limit</th>
+                                <th scope="col">Spent This Month</th>
+                                <th scope="col">Progress</th>
+                                <th scope="col">Remaining</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="budgets-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-area hidden" id="kategori-content">
+                <div class="transaction-header">
+                    <h1>Category Management</h1>
+                    <button id="add-category" class="btn-primary"><i class="fas fa-plus"></i> Add Category</button>
+                </div>
+                
+                <div class="table-container">
+                    <table class="categories-table" aria-label="Categories list">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categories-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-area hidden" id="target-content">
+                <div class="transaction-header">
+                    <h1>Financial Targets</h1>
+                    <button id="add-milestone" class="btn-primary"><i class="fas fa-plus"></i> Add Target</button>
+                </div>
+                
+                <div class="table-container">
+                    <table class="milestones-table" aria-label="Financial targets list">
+                        <thead>
+                            <tr>
+                                <th scope="col">Target Name</th>
+                                <th scope="col">Target Amount</th>
+                                <th scope="col">Current Balance</th>
+                                <th scope="col">Progress</th>
+                                <th scope="col">Target Date</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="milestones-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-area hidden" id="laporan-content">
+                <div class="transaction-header">
+                    <h1>Financial Reports</h1>
+                    <div class="report-controls">
+                        <select id="report-type" class="chart-selector">
+                            <option value="monthly">Monthly</option>
+                            <option value="category">By Category</option>
+                        </select>
+                        <select id="report-year" class="chart-selector">
+                            </select>
+                        <button id="export-pdf" class="btn-primary"><i class="fas fa-file-pdf"></i> Export PDF</button>
+                    </div>
+                </div>
+                
+                <div class="report-container">
+                    <div class="chart-container">
+                        <canvas id="reportChart"></canvas>
+                    </div>
+                    <div class="report-summary" id="report-summary">
+                        </div>
+                </div>
+            </div>
+
+            <div id="modal-container">
+                <div class="modal hidden" id="transaction-modal" role="dialog" aria-modal="true" aria-labelledby="transaction-modal-title">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="transaction-modal-title">Add Transaction</h2>
+                            <button class="close-modal" aria-label="Close modal">&times;</button>
+                        </div>
+                        <form id="transaction-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="transaction-type">Transaction Type</label>
+                                    <select id="transaction-type" required aria-required="true">
+                                        <option value="">Select Type</option>
+                                        <option value="income">Income</option>
+                                        <option value="expense">Expense</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="transaction-amount">Amount (<span id="modal-currency-symbol">IDR</span>)</label>
+                                    <input type="number" id="transaction-amount" min="0" step="1000" required aria-required="true">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="transaction-date">Date</label>
+                                    <input type="date" id="transaction-date" required aria-required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="transaction-category">Category</label>
+                                    <select id="transaction-category" required aria-required="true">
+                                        <option value="">Select Category</option>
+                                        </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="transaction-recurrence">Recurrence</label>
+                                <select id="transaction-recurrence">
+                                    <option value="none">None</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="weekly">Weekly</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group hidden" id="recurrence-end-group">
+                                <label for="recurrence-end-date">End Date (Optional)</label>
+                                <input type="date" id="recurrence-end-date">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="transaction-description">Description</label>
+                                <textarea id="transaction-description" rows="3"></textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary cancel-btn">Cancel</button>
+                                <button type="submit" class="btn-primary">Save Transaction</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal hidden" id="category-modal" role="dialog" aria-modal="true" aria-labelledby="category-modal-title">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="category-modal-title">Add Category</h2>
+                            <button class="close-modal" aria-label="Close modal">&times;</button>
+                        </div>
+                        <form id="category-form">
+                            <div class="form-group">
+                                <label for="category-name">Category Name</label>
+                                <input type="text" id="category-name" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="category-type">Category Type</label>
+                                <select id="category-type" required aria-required="true">
+                                    <option value="">Select Type</option>
+                                    <option value="income">Income</option>
+                                    <option value="expense">Expense</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary cancel-btn">Cancel</button>
+                                <button type="submit" class="btn-primary">Save Category</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal hidden" id="budget-modal" role="dialog" aria-modal="true" aria-labelledby="budget-modal-title">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="budget-modal-title">Set Monthly Budget</h2>
+                            <button class="close-modal" aria-label="Close modal">&times;</button>
+                        </div>
+                        <form id="budget-form">
+                            <div class="form-group">
+                                <label for="budget-category">Category (Expense Only)</label>
+                                <select id="budget-category" required aria-required="true">
+                                    <option value="">Select Category</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="budget-limit">Monthly Limit (<span id="budget-currency-symbol">IDR</span>)</label>
+                                <input type="number" id="budget-limit" min="1" step="1000" required aria-required="true">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary cancel-btn">Cancel</button>
+                                <button type="submit" class="btn-primary">Save Budget</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal hidden" id="milestone-modal" role="dialog" aria-modal="true" aria-labelledby="milestone-modal-title">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 id="milestone-modal-title">Add Target</h2>
+                            <button class="close-modal" aria-label="Close modal">&times;</button>
+                        </div>
+                        <form id="milestone-form">
+                            <div class="form-group">
+                                <label for="milestone-name">Target Name</label>
+                                <input type="text" id="milestone-name" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="milestone-target">Target Amount (<span id="milestone-currency-symbol">IDR</span>)</label>
+                                <input type="number" id="milestone-target" min="1" step="0.01" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="milestone-date">Target Date</label>
+                                <input type="date" id="milestone-date" required aria-required="true">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary cancel-btn">Cancel</button>
+                                <button type="submit" class="btn-primary">Save Target</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

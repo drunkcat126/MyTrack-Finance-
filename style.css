@@ -1,0 +1,1182 @@
+:root {
+    /* Light Theme Colors */
+    --primary-color: #4a6fa5;
+    --primary-hover: #3a5a8c;
+    --secondary-color: #166088;
+    --accent-color: #4cb944;
+    --accent-hover: #3ca834;
+    --danger-color: #ff0008;
+    --danger-hover: #e00000;
+    
+    --text-primary: #2d3436;
+    --text-secondary: #636e72;
+    --text-light: #ffffff;
+    
+    --bg-color: #f5f7fa;
+    --sidebar-bg: #2d3436;
+    --card-bg: #ffffff;
+    --border-color: #dfe6e9;
+    --hover-bg: rgba(0, 0, 0, 0.05);
+    
+    --income-color: #2ecc71;
+    --income-hover: #25a25a;
+    --expense-color: #ff1900;
+    --expense-hover: #e00000;
+    --warning-color: #f1c40f; /* New: Warning color for budget */
+    --over-budget-color: var(--danger-color); /* New: Over budget color */
+    
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    
+    --transition: all 0.2s ease;
+    
+    /* Dark Theme Colors */
+    --dark-primary: #5d8acd;
+    --dark-secondary: #1a7bb9;
+    --dark-accent: #66bb6a;
+    --dark-danger: #ff5252;
+    
+    --dark-text-primary: #ecf0f1;
+    --dark-text-secondary: #bdc3c7;
+    
+    --dark-bg: #121212;
+    --dark-sidebar-bg: #1e1e1e;
+    --dark-card-bg: #2d2d2d;
+    --dark-border-color: #444;
+    --dark-hover-bg: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] {
+    --primary-color: var(--dark-primary);
+    --primary-hover: var(--dark-secondary);
+    --secondary-color: var(--dark-secondary);
+    --accent-color: var(--dark-accent);
+    --accent-hover: #55aa55;
+    --danger-color: var(--dark-danger);
+    --danger-hover: #ff0000;
+    
+    --text-primary: var(--dark-text-primary);
+    --text-secondary: var(--dark-text-secondary);
+    
+    --bg-color: var(--dark-bg);
+    --sidebar-bg: var(--dark-sidebar-bg);
+    --card-bg: var(--dark-card-bg);
+    --border-color: var(--dark-border-color);
+    --hover-bg: var(--dark-hover-bg);
+    
+    --income-color: var(--dark-accent);
+    --income-hover: #55aa55;
+    --expense-color: var(--dark-danger);
+    --expense-hover: #ff0000;
+    --warning-color: #f1c40f;
+    --over-budget-color: var(--dark-danger);
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+h1, h2, h3 {
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.2rem; }
+h4 { font-size: 1.1rem; font-weight: 600; }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* Layout */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    color: var(--text-light);
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s, transform 0.3s ease;
+    z-index: 100;
+    
+    /* *** PERBAIKAN: Tombol Tema Hilang *** */
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    /* *** PERBAIKAN: Scrollbar Halaman Horizontal *** */
+    min-width: 0;
+}
+
+.content-area {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 101; 
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Components */
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    padding: 0 1.25rem 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo i {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+    color: var(--accent-color);
+}
+
+.logo h1 {
+    font-size: 1.25rem;
+    color: var(--text-light);
+}
+
+/* Navigation */
+nav ul {
+    list-style: none;
+    margin-top: 2rem;
+}
+
+nav li {
+    margin-bottom: 0.25rem;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    color: rgba(255, 255, 255, 0.8);
+    border-left: 3px solid transparent;
+    transition: var(--transition);
+}
+
+nav a i {
+    margin-right: 0.75rem;
+    width: 1.25rem;
+    text-align: center;
+    font-size: 1rem;
+}
+
+nav a:hover {
+    color: var(--text-light);
+    background-color: var(--hover-bg);
+}
+
+nav li.active a {
+    color: var(--text-light);
+    background-color: var(--hover-bg);
+    border-left-color: var(--accent-color);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    margin-top: auto;
+    padding: 1.25rem;
+}
+
+#theme-switcher {
+    display: flex;
+    align-items: center;
+    background-color: var(--hover-bg);
+    color: var(--text-light);
+    padding: 0.625rem 0.9375rem;
+    border-radius: var(--radius-sm);
+    width: 100%;
+    transition: var(--transition);
+}
+
+#theme-switcher:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#theme-switcher i {
+    margin-right: 0.625rem;
+}
+
+/* Header */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.875rem;
+    background-color: var(--card-bg);
+    box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap; 
+    gap: 0.75rem;
+}
+
+.transaction-header > div {
+    display: flex;
+    gap: 0.75rem;
+}
+
+
+.header-title p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* Mobile Nav Toggle */
+.mobile-nav-toggle {
+    display: none; 
+    font-size: 1.5rem;
+    color: var(--text-primary);
+}
+
+/* Kontrol Header (Mata Uang & Profil) */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.currency-selector {
+    display: flex;
+    align-items: center;
+    background: var(--hover-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.25rem 0.5rem;
+}
+
+.currency-selector i {
+    color: var(--text-secondary);
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+
+#currency-switcher {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+#currency-switcher:focus {
+    outline: none;
+}
+
+/* *** PERBAIKAN: Dropdown Mata Uang Mode Gelap *** */
+#currency-switcher option {
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.user-profile img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-profile span {
+    font-weight: 500;
+}
+
+/* Cards */
+.card-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.875rem;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card-icon {
+    width: 3.125rem;
+    height: 3.125rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.9375rem;
+    font-size: 1.25rem;
+    color: var(--text-light);
+    flex-shrink: 0;
+}
+
+.balance-card .card-icon {
+    background-color: var(--primary-color);
+}
+
+.income-card .card-icon {
+    background-color: var(--income-color);
+}
+
+.expense-card .card-icon {
+    background-color: var(--expense-color);
+}
+
+.card-info h2 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.3125rem;
+}
+
+.card-info p {
+    font-size: 1.375rem;
+    font-weight: 600;
+}
+
+/* Recent Transactions */
+.recent-transactions {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.view-all {
+    color: var(--primary-color);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.view-all:hover {
+    text-decoration: underline;
+}
+
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9375rem;
+}
+
+/* *** FITUR BARU: Dashboard Empty State *** */
+.empty-state-card {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--hover-bg);
+    border-radius: var(--radius-sm);
+    border: 2px dashed var(--border-color);
+}
+.empty-state-card i {
+    font-size: 2.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+.empty-state-card h4 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+.empty-state-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.625rem;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-info {
+    display: flex;
+    align-items: center;
+}
+
+.transaction-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.625rem;
+    font-size: 1rem;
+    color: var(--text-light);
+    flex-shrink: 0;
+}
+
+.transaction-icon.income {
+    background-color: var(--income-color);
+}
+
+.transaction-icon.expense {
+    background-color: var(--expense-color);
+}
+
+.transaction-details h4 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.1875rem;
+}
+
+.transaction-details p {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.transaction-amount {
+    font-weight: 600;
+}
+
+.transaction-amount.income {
+    color: var(--income-color);
+}
+
+.transaction-amount.expense {
+    color: var(--expense-color);
+}
+
+/* Monthly Chart */
+.monthly-chart {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+}
+
+/* Kode baru untuk .chart-container (sekitar baris 406) */
+.chart-container {
+    position: relative;
+    height: 350px; /* Tinggi default untuk desktop */
+    width: 100%;
+    max-width: 700px; /* Batasi lebar chart agar tidak terlalu besar */
+    margin: 0 auto; /* Tengahkan chart di desktop */
+}
+
+.chart-controls {
+    display: flex;
+    gap: 0.625rem;
+}
+
+.chart-selector {
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+}
+
+/* Recommendations */
+.recommendations {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.recommendations-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.recommendation-card {
+    background-color: var(--hover-bg);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    border-left: 4px solid var(--accent-color);
+}
+
+.recommendation-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+
+.recommendation-card p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* *** FITUR BARU: Transaction Filters *** */
+.transaction-filters {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.5rem;
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+.transaction-filters .form-group {
+    margin-bottom: 0;
+    flex-grow: 1;
+}
+.transaction-filters .btn-secondary {
+    flex-shrink: 0;
+    /* Sesuaikan tinggi agar sama dengan input */
+    height: calc(0.625rem * 2 + 1em * 1.6 + 2px); 
+}
+
+/* Tables */
+.table-container {
+    overflow-x: auto;
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+th, td {
+    padding: 0.75rem 0.9375rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: var(--hover-bg);
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background-color: var(--hover-bg);
+}
+
+.income-row, .income-color {
+    color: var(--income-color);
+}
+
+.expense-row, .expense-color {
+    color: var(--expense-color);
+}
+
+/* Report Container */
+.report-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.report-summary {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.report-summary h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+.report-summary h5 {
+    font-size: 1rem;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+
+.report-summary-item {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.report-summary-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.report-summary-item h4 {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.report-summary-item p {
+    font-weight: 500;
+}
+
+.report-controls {
+    display: flex;
+    gap: 0.625rem;
+    align-items: center;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 0.5rem 0.9375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3125rem;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-primary i {
+    font-size: 0.75rem;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.5rem 0.9375rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3125rem;
+}
+
+.btn-secondary:hover {
+    background-color: var(--hover-bg);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 0.3125rem;
+}
+
+.edit-btn {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 0.3125rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    transition: var(--transition);
+}
+
+.edit-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+.delete-btn {
+    background-color: var(--danger-color);
+    color: var(--text-light);
+    padding: 0.3125rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    transition: var(--transition);
+}
+
+.delete-btn:hover {
+    background-color: var(--danger-hover);
+}
+
+/* Progress Bar */
+.progress-bar {
+    height: 0.625rem;
+    background-color: var(--border-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin: 0.3125rem 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+/* Progress Bar Statuses */
+.progress-fill.warning {
+    background-color: var(--warning-color);
+}
+.progress-fill.danger {
+    background-color: var(--over-budget-color);
+}
+
+
+/* Modals */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal:not(.hidden) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-md);
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+}
+
+.modal:not(.hidden) .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.close-modal {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    transition: var(--transition);
+}
+
+.close-modal:hover {
+    color: var(--text-primary);
+}
+
+/* Forms */
+#transaction-form, #category-form, #milestone-form, #budget-form {
+    padding: 1.25rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 0.9375rem;
+}
+
+.form-group {
+    flex: 1;
+    margin-bottom: 0.9375rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.3125rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 0.625rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 5rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
+}
+
+/* Toast Notification */
+.toast-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background-color: var(--sidebar-bg);
+    color: var(--text-light);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-notification.error {
+    background-color: var(--danger-color);
+}
+
+/* Table Empty State */
+.empty-state-cell {
+    text-align: center;
+    padding: 2.5rem 1rem !important;
+    color: var(--text-secondary);
+}
+
+.empty-state-cell i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.empty-state-cell p {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.empty-state-cell small {
+    font-size: 0.9rem;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    /* Gaya Sidebar Mobile */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh; 
+        width: 250px; 
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 102; 
+        box-shadow: var(--shadow-lg);
+        overflow-y: auto;
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    /* *** PERBAIKAN: Tata letak Laporan Responsif *** */
+    .report-container {
+        grid-template-columns: 1fr;
+    }
+
+    /* Tampilkan kembali teks di sidebar mobile */
+    .logo h1, nav a span, #theme-switcher span {
+        display: inline;
+    }
+    
+    .logo {
+        justify-content: flex-start;
+        padding: 0 1.25rem 1.25rem;
+    }
+    
+    nav a {
+        justify-content: flex-start;
+    }
+    
+    nav a i {
+        margin-right: 0.75rem;
+    }
+    
+    /* Tampilkan Tombol Hamburger */
+    .mobile-nav-toggle {
+        display: block;
+        margin-right: 1rem;
+    }
+
+    /* Sesuaikan Header */
+    .main-header {
+        flex-wrap: wrap; 
+        padding: 1rem;
+    }
+
+    .header-title {
+        flex-basis: 100%; 
+        order: 3; 
+        margin-top: 1rem;
+        padding-left: 0;
+    }
+
+    .header-controls {
+        margin-left: auto; 
+        order: 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-area {
+        padding: 0.9375rem;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .modal-content {
+        max-width: 95%;
+    }
+    
+    .recommendations-list {
+        grid-template-columns: 1fr;
+    }
+
+    /* *** FITUR BARU: Filter Responsif *** */
+    .transaction-filters {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+    }
+    .transaction-filters .form-group {
+        width: 100%;
+    }
+    
+    /* *** PERBAIKAN: Tabel Responsif *** */
+    .table-container {
+        overflow-x: hidden;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+    }
+    
+    table {
+        min-width: 100%;
+        border: none;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        display: block;
+        margin-bottom: 1rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        background-color: var(--card-bg);
+        overflow: hidden;
+    }
+
+    table td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: 1px dashed var(--border-color);
+    }
+    
+    table tr:last-child {
+         margin-bottom: 0;
+    }
+
+    table td:last-child {
+        border-bottom: none;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0.75rem;
+        width: 45%;
+        padding-right: 0.75rem;
+        text-align: left;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+    
+    table td[data-label="Actions"] {
+        padding-left: 0.75rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+    table td[data-label="Actions"] .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+    }
+    /* *** AKHIR PERBAIKAN RESPONSif *** */
+}
+
+@media (max-width: 576px) {
+    .card-row {
+        grid-template-columns: 1fr;
+    }
+
+    .header-controls {
+        gap: 0.75rem;
+    }
+    
+    .user-profile span {
+        display: none;
+    }
+    
+.chart-container {
+        height: 280px; /* Perkecil lagi di HP */
+    }
+
+    .currency-selector i {
+        margin-right: 0.25rem;
+    }
+    
+    .transaction-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .report-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
