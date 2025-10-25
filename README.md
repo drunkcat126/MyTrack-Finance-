@@ -1,48 +1,48 @@
-📊 MyTrack: Personal Finance Tracker
+Tentu! Berikut adalah deskripsi *README* yang telah diformat ulang tanpa menggunakan tabel, dan ditulis dalam Bahasa Inggris seperti yang Anda minta:
 
-MyTrack is a personal finance tracker web application designed to help users monitor their income, expenses, and financial goals with an intuitive interface and informative data visualization. Built using **pure HTML, CSS, and JavaScript** (Vanilla JS) along with Chart.js for data visualization, MyTrack offers a *lightweight* and *responsive* solution for daily financial management.
+---
 
-✨ Key Features
+# 💰 MyTrack: Financial Tracking Dashboard (Vanilla JavaScript)
 
-MyTrack is equipped with a full suite of features for effective financial management:
+## ✨ Project Description
 
-1. Concise and Informative Dashboard
+**MyTrack** is a *self-hosted* and *client-side* personal finance management dashboard application. It is built purely using **HTML, CSS, and Vanilla JavaScript**, aiming to give users complete control over their transactions, budgeting, and financial goals.
 
-  * **Financial Summary**: Displays the **Total Balance**, **Total Income**, and **Total Expense** in *real-time* using easily digestible cards.
-  * **Recent Transactions**: Shows the **5 most recent transactions** to quickly monitor current activity.
-  * **Interactive Monthly Chart**: Data visualization using **Chart.js** displays a comparison between monthly income and expenses throughout the year (Bar Chart).
-  * **Smart Recommendations**: Provides **personalized financial advice** based on savings rate, dominant expense categories, and milestone progress.
+With a strong focus on exceptional **User Experience (UX)** and powerful data visualization, MyTrack serves as an effective solution for managing and improving financial health.
 
-2. Core Data Management
+## 🚀 Key Features
 
-  * **Transaction Management**:
-      * **Add/Edit/Delete Transactions**: Users can record Income or Expense transactions, complete with amount, date, category, and description.
-      * **Comprehensive Transaction Table**: Presents a detailed list of transactions, sorted by the latest date.
-  * **Category Management**:
-      * Users can add new categories for both Income (e.g., Salary, Bonus) and Expense (e.g., Food, Entertainment).
-      * Includes **validation** to prevent the deletion of categories already used in transactions, ensuring data integrity.
-  * **Financial Goals (Milestones)**:
-      * **Goal Setting**: Allows users to set specific savings goals (e.g., Buy a Motorbike, Vacation) with a target amount and date.
-      * **Progress Tracking**: Automatically calculates and displays the **progress percentage (%)** toward the goal based on the current balance, visualized with a dynamic *progress bar*.
+### 1. Advanced Tracking
 
-3. Reports and In-Depth Analysis
+* **Monthly Budgeting:** Users can set specific spending limits for each expense category and track their progress visually. The system uses intuitive color codes (Green, Yellow, Red) to alert users, helping them actively prevent overspending.
+* **Recurring Transactions:** The application supports the automation of recurring transactions, such as salaries or monthly bills. Users can set them up as weekly or monthly occurrences, complete with an optional end date.
+* **Financial Targets:** Define long-term savings goals (e.g., an emergency fund or a major purchase goal) and monitor the progression toward these targets directly from the current total balance.
+* **Recommendation System:** Provides real-time, data-driven financial advice directly on the dashboard, including alerts for budgets nearing their limit or suggestions to optimize savings rates.
 
-  * **Report Types**: Users can select **Monthly (Line Chart)** or **Category-Based (Pie Chart)** reports.
-  * **Report Visualization**: Presents detailed charts:
-      * Monthly Report uses a **Line Chart** to view trends over time.
-      * Category Report uses a **Pie Chart** to visualize the proportional allocation of funds.
-  * **Report Summary**: Provides a detailed text summary alongside the chart, including totals, net income, and the months/categories with the highest expense/income.
-  * **PDF Export Functionality**: Allows users to **export the report (chart and summary)** into a PDF format using **jsPDF**, ideal for documentation or sharing.
+### 2. Data & Reporting
 
-4. User Experience (UX)
+* **Visual Reports:** Transaction data is visualized clearly using a **Line Chart** for monthly income/expense comparison and a **Pie Chart** for a detailed breakdown of spending by category, all viewable by year.
+* **Aesthetic PDF Export:** Users can download a professional, structured annual report in PDF format. The export uses a dedicated **Dark Mode** theme and bold fonts for high contrast and modern aesthetics.
+* **CSV Export:** Provides the option to download all raw transaction data into a CSV file, enabling in-depth data analysis using external spreadsheet software (Excel/Google Sheets).
 
-  * **Dark/Light Mode Support**: Features a *theme switcher* to toggle between **Light Mode** and **Dark Mode** for visual comfort. The theme preference is stored in *Local Storage*.
-  * **Local Storage**: All data (transactions, categories, milestones) are stored in the browser's **Local Storage**, ensuring data persistence even after closing the application.
-  * **Responsive Design**: The interface is optimized for desktop, tablet, and mobile viewing.
+### 3. User Experience (UX)
 
-🛠️ Tech Stack
+* **Multi-Currency Support:** MyTrack allows tracking and display conversion between **IDR, USD, and SGD**.
+* **Dark/Light Mode:** A fast theme-switching feature that uses CSS variables and persistently saves the user's preference in the browser.
+* **Responsiveness:** The design is fully optimized for a seamless experience across all devices, including desktop, tablet, and mobile phones.
+* **Keyboard Shortcut:** Quick access is enabled for adding new transactions instantly by pressing the keyboard shortcut **`Ctrl + T`**.
 
-  * **Front-end**: HTML5, CSS3, JavaScript (Vanilla JS)
-  * **Visualization**: [Chart.js](https://www.chartjs.org/)
-  * **Document Export**: [jsPDF](https://www.google.com/search?q=https://raw.githack.com/MrRio/jsPDF/master/docs/) (Note: Based on your `script.js` code, only the core `jspdf` library is used for image and text, `jspdf-autotable` is included in `index.html` but not explicitly used in the export logic)
-  * **Icons**: [Font Awesome](https://fontawesome.com/)
+## 🛠️ Technology Stack
+
+* **Frontend:** HTML5, CSS3, Vanilla JavaScript (ES6+)
+* **Data Visualization:** Chart.js
+* **Document Export:** jsPDF and jsPDF-AutoTable
+
+## ⚙️ How to Run the Project
+
+1.  **Clone** this repository to your local machine.
+2.  Navigate to the `finance web/` folder.
+3.  Open the `index.html` file using any modern web browser (Chrome, Firefox, Edge).
+4.  All application data is stored locally in your browser using **Local Storage**.
+
+---
